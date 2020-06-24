@@ -28,6 +28,10 @@ def delete_post():
     return HttpResponse("delete")  # TODO #23
 
 
+def slack_help():
+    return HttpResponse("help")  # TODO #30
+
+
 @csrf_exempt
 def dispatch(request):
     # TODO #25
