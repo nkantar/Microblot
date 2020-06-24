@@ -32,6 +32,14 @@ def slack_help():
     return HttpResponse("help")  # TODO #30
 
 
+def slack_uninstall():
+    return HttpResponse("uninstall")  # TODO #31
+
+
+def slack_download():
+    return HttpResponse("download")  # TODO #32
+
+
 @csrf_exempt
 def dispatch(request):
     # TODO #25
