@@ -8,23 +8,23 @@ def ping(request):
     return HttpResponse("pong")
 
 
-def oauth(request):
-    ...  # TODO #19
+def slack_oauth(request):
+    return HttpResponse("oauth")  # TODO #19
 
 
-def new_post():
+def slack_new():
     return HttpResponse("new")  # TODO #20
 
 
-def list_posts():
+def slack_list():
     return HttpResponse("list")  # TODO #21
 
 
-def edit_post():
+def slack_edit():
     return HttpResponse("edit")  # TODO #22
 
 
-def delete_post():
+def slack_delete():
     return HttpResponse("delete")  # TODO #23
 
 
@@ -37,6 +37,6 @@ def dispatch(request):
     # TODO #25
     command = find_command(request.body.decode("utf-8"))
 
-    func = locals().get(f"{command}_post")
+    func = locals().get(f"slack_{command}")
     # TODO #24
     return func()
