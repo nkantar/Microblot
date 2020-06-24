@@ -36,8 +36,6 @@ def slack_oauth(request):
     )
     team_info_content = json.loads(team_info_response.content)
 
-    breakpoint()
-
     blog = Blog.objects.create(
         slug=team_info_content["team"]["domain"],
         name=team_info_content["team"]["name"],
