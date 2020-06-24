@@ -26,7 +26,7 @@ SECRET_KEY = "#s)@uwhofaqiev@@ltn2_6w$^@q7!+h&k)fzf2+d2xb$ogy0z2"
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "*",  # TODO only during dev
+    "*",  # TODO #26 + #35
 ]
 
 
