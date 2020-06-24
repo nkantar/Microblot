@@ -8,9 +8,10 @@ from microblot.core.models import SlugifiedModel, TimestampedModel
 
 class BlogManager(Manager):
     def create(self, *args, **kwargs):
-        kwargs["site_id"] = Site.objects.create(
-            domain=f"{kwargs['slug']}.{settings.MAIN_DOMAIN}", name=self.name
-        ).id
+        domain = f"{kwargs['slug']}.{settings.MAIN_DOMAIN}"
+        site = Site.objects.create(domain=domain, name=self.name)
+
+        kwargs["site_id"] = site.id
         super(BlogManager, self).create(*args, **kwargs)
 
 
