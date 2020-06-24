@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "microblot.api",
     "microblot.blogs",
+    "microblot.posts",
+    "microblot.categories",
+    "microblot.authors",
 ]
 
 MIDDLEWARE = [
