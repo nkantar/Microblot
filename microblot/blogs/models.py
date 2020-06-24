@@ -23,3 +23,6 @@ class Blog(SlugifiedModel, TimestampedModel):
     platform = JSONField()  # TODO #43
 
     objects = BlogManager()
+
+    def __str__(self):
+        return f"{self.slug} [{self.name}]"
