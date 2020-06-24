@@ -1,3 +1,8 @@
+import json
+
+import requests
+
+from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -7,7 +12,26 @@ def ping(request):
 
 
 def slack_oauth(request):
-    print(request.GET)
+    response = requests.post(
+        settings.SLACK_OAUTH_ACCESS_URL,
+        data={
+            "client_id": settings.SLACK_CLIENT_ID,
+            "client_secret": settings.SLACK_CLIENT_SECRET,
+            "code": request.GET.get("code"),
+            "redirect_uri": settings.SLACK_REDIRECT_URL,
+        },
+    )
+
+    content = json.loads(response.content)
+
+    bot_user_id = content["bot_user_id"]
+    bot_access_token = content["access_token"]
+
+    team_id = content["team"]["id"]
+    team_name = content["team"]["name"]
+
+    # TODO create relevant site once #41 is done
+
     return HttpResponse("oauth")  # TODO #19
 
 
