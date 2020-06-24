@@ -1,14 +1,13 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from .helpers import find_command
-
 
 def ping(request):
     return HttpResponse("pong")
 
 
 def slack_oauth(request):
+    print(request.GET)
     return HttpResponse("oauth")  # TODO #19
 
 
@@ -20,11 +19,13 @@ def slack_list():
     return HttpResponse("list")  # TODO #21
 
 
-def slack_edit():
+def slack_edit(post_id):
+    print(post_id)  # TODO
     return HttpResponse("edit")  # TODO #22
 
 
-def slack_delete():
+def slack_delete(post_id):
+    print(post_id)  # TODO
     return HttpResponse("delete")  # TODO #23
 
 
@@ -43,8 +44,11 @@ def slack_download():
 @csrf_exempt
 def dispatch(request):
     # TODO #25
-    command = find_command(request.body.decode("utf-8"))
 
-    func = locals().get(f"slack_{command}")
+    text = request.GET.get("text")
+    params = text.split(maxsplit=1)
+    command = params[0]
+    func = globals().get(f"slack_{command}")
+
     # TODO #24
-    return func()
+    return func(*(params[1:]))
