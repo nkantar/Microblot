@@ -4,5 +4,6 @@ from . import views
 
 
 urlpatterns = [
-    path("ping", views.ping, name="ping"),
+    path("", views.dispatch, name="slack-dispatch"),
+    path("ping", views.ping, name="slack-ping"),
 ]
