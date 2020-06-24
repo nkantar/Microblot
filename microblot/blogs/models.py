@@ -22,4 +22,4 @@ class Blog(SlugifiedModel, TimestampedModel):
     # structure differs per platform
     platform = JSONField()  # TODO #43
 
-    objects = BlogManager()  # The default manager.
+    objects = BlogManager()
