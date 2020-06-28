@@ -16,7 +16,7 @@ class TimestampedModel(Model):
 
 
 class SlugifiedModel(Model):
-    slug = SlugField(max_length=128)
+    slug = SlugField(max_length=128, unique=True)
 
     class Meta:
         abstract = True
