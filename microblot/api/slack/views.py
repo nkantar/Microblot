@@ -93,8 +93,8 @@ def slack_uninstall():
     return HttpResponse("uninstall")  # TODO #31
 
 
-def slack_download():
-    return HttpResponse("download")  # TODO #32
+def slack_info():
+    return HttpResponse("info")  # TODO #32
 
 
 @csrf_exempt
