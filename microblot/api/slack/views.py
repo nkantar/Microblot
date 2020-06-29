@@ -102,7 +102,10 @@ def dispatch(request):
 
     text = request.POST.get("text")
     params = text.split(maxsplit=1)
-    command = params[0]
+    try:
+        command = params[0]
+    except IndexError:
+        command = "help"
     func = globals().get(f"slack_{command}")
 
     print(command)
