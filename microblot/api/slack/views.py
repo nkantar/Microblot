@@ -3,6 +3,7 @@ import hmac
 import json
 
 import requests
+import slack
 
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
@@ -18,35 +19,32 @@ def ping(request):
 
 
 def slack_oauth(request):
-    oauth_response = requests.post(
-        settings.SLACK_OAUTH_ACCESS_URL,
-        data={
-            "client_id": settings.SLACK_CLIENT_ID,
-            "client_secret": settings.SLACK_CLIENT_SECRET,
-            "code": request.GET.get("code"),
-            "redirect_uri": settings.SLACK_REDIRECT_URL,
-        },
-    )
-    oauth_content = json.loads(oauth_response.content)
+    code = request.GET["code"]
 
-    team_info_url = f"{settings.SLACK_API_ROOT_URL}/team.info"
-    team_info_response = requests.get(
-        team_info_url,
-        headers={"content-type": "application/x-www-form-urlencoded"},
-        params={
-            "token": oauth_content["access_token"],
-            "team": oauth_content["team"]["id"],
-        },
+    oauth_client = slack.WebClient(token="")
+    response = oauth_client.oauth_v2_access(
+        client_id=settings.SLACK_CLIENT_ID,
+        client_secret=settings.SLACK_CLIENT_SECRET,
+        code=code,
     )
-    team_info_content = json.loads(team_info_response.content)
 
-    blog = Blog.objects.create(
-        slug=team_info_content["team"]["domain"],
-        name=team_info_content["team"]["name"],
-        platform={
-            "bot_user_id": oauth_content["bot_user_id"],
-            "bot_access_token": oauth_content["access_token"],
-            "team_id": oauth_content["team"]["id"],
+    bot_user_id = response.data["bot_user_id"]
+    bot_access_token = response.data["access_token"]
+    team_id = response.data["team"]["id"]
+
+    authed_client = slack.WebClient(token=bot_access_token)
+    team_info = authed_client.team_info().data
+
+    team_domain = team_info["team"]["domain"]
+    team_name = team_info["team"]["name"]
+
+    blog, unused_blog_created = Blog.objects.update_or_create(
+        slack_id=team_id,
+        defaults={
+            "slug": team_domain,
+            "name": team_name,
+            "bot_user_id": bot_user_id,
+            "bot_access_token": bot_access_token,
         },
     )
 
