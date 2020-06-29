@@ -6,24 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blogs', '0003_blog_slack_id'),
+        ("blogs", "0003_blog_slack_id"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='blog',
-            name='platform',
-        ),
+        migrations.RemoveField(model_name="blog", name="platform",),
         migrations.AddField(
-            model_name='blog',
-            name='bot_access_token',
-            field=models.CharField(default='foo', max_length=128),
+            model_name="blog",
+            name="bot_access_token",
+            field=models.CharField(default="foo", max_length=128),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='blog',
-            name='bot_user_id',
-            field=models.CharField(default='foo', max_length=128),
+            model_name="blog",
+            name="bot_user_id",
+            field=models.CharField(default="foo", max_length=128),
             preserve_default=False,
         ),
     ]
