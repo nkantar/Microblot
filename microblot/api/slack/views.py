@@ -3,7 +3,8 @@ import hmac
 import json
 
 import requests
-import slack
+from slack import WebClient
+from slack.signature import SignatureVerifier
 
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
@@ -21,7 +22,7 @@ def ping(request):
 def slack_oauth(request):
     code = request.GET["code"]
 
-    oauth_client = slack.WebClient(token="")
+    oauth_client = WebClient(token="")
     response = oauth_client.oauth_v2_access(
         client_id=settings.SLACK_CLIENT_ID,
         client_secret=settings.SLACK_CLIENT_SECRET,
@@ -32,7 +33,7 @@ def slack_oauth(request):
     bot_access_token = response.data["access_token"]
     team_id = response.data["team"]["id"]
 
-    authed_client = slack.WebClient(token=bot_access_token)
+    authed_client = WebClient(token=bot_access_token)
     team_info = authed_client.team_info().data
 
     team_domain = team_info["team"]["domain"]
@@ -52,12 +53,12 @@ def slack_oauth(request):
 
 
 def slack_new(request):
-    blog = Blog.objects.get(platform__team_id=request.POST["team_id"])
+    blog = Blog.objects.get(slack_id=request.POST["team_id"])
     views_open_url = f"{settings.SLACK_API_ROOT_URL}/views.open"
     new_modal_response = requests.post(
         views_open_url,
         data={
-            "token": blog.platform["bot_access_token"],
+            "token": blog.bot_access_token,
             "trigger_id": request.POST["trigger_id"],
             "view": NEW_POST,
             "callback_id": "foobar",
@@ -100,20 +101,9 @@ def slack_info():
 def dispatch(request):
     # TODO #25
 
-    slack_signature = request.headers["X-Slack-Signature"]
+    signature_verifier = SignatureVerifier(settings.SLACK_SIGNING_SECRET)
 
-    request_timestamp = request.headers["X-Slack-Request-Timestamp"]
-    request_body = request.body.decode()
-    message = f"v0:{request_timestamp}:{request_body}"
-    hashed_message = hmac.new(
-        bytes(settings.SLACK_SIGNING_SECRET, "utf-8"),
-        bytes(message, "utf-8"),
-        digestmod=hashlib.sha256,
-    ).hexdigest()
-    signature = f"v0={hashed_message}"
-
-    signatures_match = hmac.compare_digest(slack_signature, signature)
-    if not signatures_match:
+    if not signature_verifier.is_valid_request(request.body, request.headers):
         return HttpResponseForbidden
 
     text = request.POST.get("text")
