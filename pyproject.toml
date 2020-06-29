@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "microblot"
+version = "0.1.0"
+description = "Microblogging chat bot"
+authors = ["Nik Kantar <nik@nkantar.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+django = "^3.0.7"
+requests = "^2.24.0"
+psycopg2-binary = "^2.8.5"
+
+[tool.poetry.dev-dependencies]
