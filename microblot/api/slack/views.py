@@ -68,7 +68,8 @@ def slack_new(request):
 
     # TODO: switch to Slack Python SDK, maybe that'll help? #50
 
-    return JsonResponse({"status_code": 200})
+    return JsonResponse({"status_code": 200, "message": ""})
+    # return HttpResponse("New post, got it!")  # TODO #19
 
 
 def slack_list():
@@ -101,8 +102,6 @@ def slack_info():
 def dispatch(request):
     # TODO #25
 
-    breakpoint()
-
     slack_signature = request.headers["X-Slack-Signature"]
 
     request_timestamp = request.headers["X-Slack-Request-Timestamp"]
@@ -125,7 +124,6 @@ def dispatch(request):
     func = globals().get(f"slack_{command}")
 
     print(command)
-    breakpoint()
 
     # TODO #24
     return func(request)
