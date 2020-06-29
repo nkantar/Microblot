@@ -62,9 +62,7 @@ def slack_new(request):
 
     response = client.views_open(trigger_id=trigger_id, view=NEW_POST)
 
-
     return JsonResponse({"status_code": 200, "message": ""})
-    # return HttpResponse("New post, got it!")  # TODO #19
 
 
 def slack_list():
