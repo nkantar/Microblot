@@ -52,16 +52,15 @@ def slack_oauth(request):
 
 
 def slack_new(request):
-    trigger_id = request.POST["trigger_id"]
     team_id = request.POST["team_id"]
+    trigger_id = request.POST["trigger_id"]
 
     blog = Blog.objects.get(slack_id=team_id)
 
     client = WebClient(token=blog.bot_access_token)
-
     response = client.views_open(trigger_id=trigger_id, view=NEW_POST)
 
-    return JsonResponse({"status_code": 200, "message": ""})
+    return JsonResponse({"message": ""}, status=200)
 
 
 def slack_list():
