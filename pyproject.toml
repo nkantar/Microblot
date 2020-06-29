@@ -9,5 +9,6 @@ python = "^3.7"
 django = "^3.0.7"
 requests = "^2.24.0"
 psycopg2-binary = "^2.8.5"
+slackclient = "^2.7.2"
 
 [tool.poetry.dev-dependencies]
