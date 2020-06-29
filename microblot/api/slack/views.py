@@ -53,19 +53,15 @@ def slack_oauth(request):
 
 
 def slack_new(request):
-    blog = Blog.objects.get(slack_id=request.POST["team_id"])
-    views_open_url = f"{settings.SLACK_API_ROOT_URL}/views.open"
-    new_modal_response = requests.post(
-        views_open_url,
-        data={
-            "token": blog.bot_access_token,
-            "trigger_id": request.POST["trigger_id"],
-            "view": NEW_POST,
-            "callback_id": "foobar",
-        },
-    )
+    trigger_id = request.POST["trigger_id"]
+    team_id = request.POST["team_id"]
 
-    # TODO: switch to Slack Python SDK, maybe that'll help? #50
+    blog = Blog.objects.get(slack_id=team_id)
+
+    client = WebClient(token=blog.bot_access_token)
+
+    response = client.views_open(trigger_id=trigger_id, view=NEW_POST)
+
 
     return JsonResponse({"status_code": 200, "message": ""})
     # return HttpResponse("New post, got it!")  # TODO #19
