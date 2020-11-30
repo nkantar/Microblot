@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "microblot"
-version = "0.1.0"
+name = "Microblot"
+version = "2020.0.0"
 description = "Microblogging chat bot"
 authors = ["Nik Kantar <nik@nkantar.com>"]
 
@@ -10,5 +10,6 @@ django = "^3.0.7"
 requests = "^2.24.0"
 psycopg2-binary = "^2.8.5"
 slackclient = "^2.7.2"
+parsenvy = "^2.1.0"
 
 [tool.poetry.dev-dependencies]

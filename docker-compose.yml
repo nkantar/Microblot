@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    env_file: .env
+
+  web:
+    build: .
+    env_file: .env
+    command: make devserve
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

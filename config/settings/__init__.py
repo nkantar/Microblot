@@ -84,11 +84,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "microblot_dev",
-        "USER": "nkantar",
-        "PASSWORD": "",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": parsenvy.str("POSTGRES_DB"),
+        "USER": parsenvy.str("POSTGRES_USER"),
+        "PASSWORD": parsenvy.str("POSTGRES_PASSWORD"),
+        "HOST": "db",
+        "PORT": 5432,
     }
 }
 
