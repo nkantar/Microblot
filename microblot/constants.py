@@ -6,7 +6,10 @@ DEBUG = bool(getenv("DEBUG", False))
 
 ENVIRONMENT = getenv("ENVIRONMENT", "development")
 
-CURRENT_DIR = Path.cwd()
-
-_DATABASES = {"development": f"sqlite:///{CURRENT_DIR / 'dev_db.db'}"}
-DATABASE = _DATABASES[ENVIRONMENT]
+POSTGRES_HOST = getenv("POSTGRES_HOST", "db")
+POSTGRES_DB = getenv("POSTGRES_DB")
+POSTGRES_USER = getenv("POSTGRES_USER")
+POSTGRES_PASSWORD = getenv("POSTGRES_PASSWORD")
+DATABASE = (
+    f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+)
