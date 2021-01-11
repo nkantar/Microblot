@@ -1,5 +1,7 @@
 # Slack Integration Routes
 
+These routes are intended for the Slack integration.
+
 | `/microblot` subcommand | API endpoint |
 |:----------------------- |:------------ |
 | `new` | `POST /slack/posts` |
