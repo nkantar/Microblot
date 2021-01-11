@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help format lint doccheck typecheck test
+.PHONY: help format lint doccheck typecheck test devserve
 
 help: ## this help dialog
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -18,3 +18,6 @@ typecheck: ## check type hints with mypy
 
 test: ## run tests with pytest
 	poetry run pytest --cov=microblot tests/
+
+devserve: ## run dev server
+	poetry run uvicorn microblot.main:app --reload
