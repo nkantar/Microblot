@@ -1,23 +1,50 @@
 .DEFAULT_GOAL := help
-.PHONY: help format lint doccheck typecheck test devserve
+.PHONY: help format lint doccheck typecheck test devserve build up upd logs queue down start stop sh
 
 help: ## this help dialog
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-format: ## format with black
+format: ## [container] format with black
 	poetry run black microblot/
 
-lint: ## lint with flake8
+lint: ## [container] lint with flake8
 	poetry run flake8 microblot/
 
-doccheck: ## check code docs with pydocstyle
+doccheck: ## [container] check code docs with pydocstyle
 	poetry run pydocstyle microblot/
 
-typecheck: ## check type hints with mypy
+typecheck: ## [container] check type hints with mypy
 	poetry run mypy --strict microblot/**
 
-test: ## run tests with pytest
+test: ## [container] run tests with pytest
 	poetry run pytest --cov=microblot tests/
 
-devserve: ## run dev server
-	poetry run uvicorn microblot.main:app --reload
+devserve: ## [container] run dev server
+	poetry run uvicorn microblot.main:app --host 0.0.0.0 --port 8000 --reload
+
+build: ## docker-compose build
+	docker-compose build
+
+up: ## docker-compose up
+	docker-compose up
+
+upd: ## docker-compose up --detach
+	docker-compose up --detach
+
+logs: ## docker-compose logs --follow
+	docker-compose logs --follow
+
+queue: ## docker-compose run --rm web poetry run python manage.py rqstats --interval=1
+	docker-compose run --rm web poetry run python manage.py rqstats --interval=1
+
+down: ## docker-compose down
+	docker-compose down
+
+start: ## docker-compose start
+	docker-compose start
+
+stop: ## docker-compose stop
+	docker-compose stop
+
+sh: ## docker-compose run --rm web /bin/sh
+	docker-compose run --rm web /bin/sh
