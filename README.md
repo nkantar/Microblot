@@ -16,7 +16,7 @@ You install Microblot into your Slack workspace and get `/microblot`, which lets
 
 Note: At some point there may be a master blog, including content from all public blogs. See [issue #55](https://github.com/nkantar/Microblot/issues/55).
 
-E.g., if you install Microblot into the _My Extra Cool Team_ workspace, `/microblot [new|list|edit|delete|help|info]` will manage posts on `https://myextracoolteam.microblot.io`.
+E.g., if you install Microblot into the _My Extra Cool Team_ workspace, `/microblot [new|list|edit|delete|info|help]` will manage posts on `https://myextracoolteam.microblot.io`.
 
 
 ## Interface
@@ -29,7 +29,7 @@ All Microblot interaction (save for the installation into the workspace and remo
 - `/microblot delete <ID>` deletes the post. Only allowed for relevant posts.
 - `/microblot info` outputs blog metadata, e.g., main URL, feed URL, content download URL, stats.
 - `/microblot help` displays something like this section.
-- `/microblog` defaults to `/microblot help`.
+- `/microblot` defaults to `/microblot help`.
 
 
 ## Purpose
@@ -39,11 +39,11 @@ I like microblogs. They're neat for sharing short snippets of content. A good ex
 
 ## (Anticipated) FAQ
 
-- **Will other platforms be supported?** Sure, if someone contributes support for them. I plan on genericizing the interaction between the Slack API piece and the site content pieces to support that (as you can already see from the `microblot/api/` directory structure), but I don't personally have a need for this to run anywhere else. Voice your request in an [issue](https://github.com/nkantar/Microblot/issues), though, and we'll see what happens.
+- **Will other platforms be supported?** Sure, if someone contributes support for them. I plan on genericizing the interaction between the Slack API piece and the site content pieces to support that, but I don't personally have a need for this to run anywhere else. Voice your request in an [issue](https://github.com/nkantar/Microblot/issues), though, and we'll see what happens.
 - **How do you plan on making the project sustainable?** Honestly, I'm not sure yet. I've got some ideas for features that would make sense in a paid tier (see [issue #57](https://github.com/nkantar/Microblot/issues/57)), I'd happily accept donations (for hosting costs at least, once it's up and running), and I'm open to other suggestions.
 - **Is it cool if I run it myself?** Sure! Due to resource (read: time) constraints, I don't plan on investing a whole lot into making the project easily runnable anywhere other than the main deployment, but I'm not at all against it. Start a conversation in an [issue](https://github.com/nkantar/Microblot/issues) and let's see what we can do.
-- **Why Python/Django?** Because I like it.
-- **Why Heroku/not own server/not cloud?** Least amount of effort by a long shot.
+- **Why Python?** Because I like it.
+- **Why Heroku + Netlify instead of own server or cloud?** Least amount of effort and maintenance by a long shot.
 
 
 ## Contributing
