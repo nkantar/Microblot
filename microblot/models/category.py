@@ -1,8 +1,8 @@
 from sqlalchemy import Column, String
 
-from core import Base, IdMixin, TimestampMixin
+from .core import Base
 
 
-class Category(Base, IdMixin, TimestampMixin):
+class Category(Base):
     title = Column(String)
     name = Column(String)

@@ -1,15 +1,16 @@
 from sqlalchemy import Column, DateTime, Integer
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.sql import func
 
 
-Base = declarative_base()
+class Base:
+    @declared_attr
+    def __tablename__(cls):
+        return cls.__name__.lower()
 
-
-class IdMixin:
     id = Column(Integer, primary_key=True)
-
-
-class TimestampMixin:
     created_at = Column(DateTime(timezone=True), default=func.now())
     modified_at = Column(DateTime(timezone=True), onupdate=func.utc_timestamp())
+
+
+Base = declarative_base(cls=Base)

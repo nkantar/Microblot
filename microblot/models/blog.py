@@ -1,8 +1,8 @@
 from sqlalchemy import Column, String
 
-from core import Base, IdMixin, TimestampMixin
+from .core import Base
 
 
-class Blog(Base, IdMixin, TimestampMixin):
+class Blog(Base):
     slug = Column(String)
     name = Column(String)

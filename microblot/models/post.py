@@ -1,13 +1,13 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from author import Author
-from blog import Blog
-from category import Category
-from core import Base, IdMixin, TimestampMixin
+from .author import Author
+from .blog import Blog
+from .category import Category
+from .core import Base
 
 
-class Post(Base, IdMixin, TimestampMixin):
+class Post(Base):
     title = Column(String)
     body_markdown = Column(String)
     body_html = Column(String)

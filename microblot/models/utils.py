@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 from microblot.constants import DATABASE, DEBUG
 
@@ -12,3 +13,7 @@ def db_connect():
 
 def create_schema(engine):
     Base.metadata.create_all(engine)
+
+
+Session = sessionmaker(bind=db_connect())
+session = Session()

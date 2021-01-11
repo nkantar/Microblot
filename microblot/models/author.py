@@ -1,11 +1,11 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from blog import Blog
-from core import Base, IdMixin, TimestampMixin
+from .blog import Blog
+from .core import Base
 
 
-class Author(Base, IdMixin, TimestampMixin):
+class Author(Base):
     name = Column(String)
     blog_id = Column(Integer, ForeignKey("blog.id"))
 
