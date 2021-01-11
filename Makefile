@@ -11,7 +11,6 @@ lint: ## lint with flake8
 	poetry run flake8 microblot/
 
 doccheck: ## check code docs with pydocstyle
-	# TODO
 	poetry run pydocstyle microblot/
 
 typecheck: ## check type hints with mypy
