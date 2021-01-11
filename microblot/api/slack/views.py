@@ -10,8 +10,9 @@ from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from microblot.blogs.models import Blog
+from microblot.posts.models import Post
 
-from .modals import NEW_POST
+from .modals import populate_post_modal
 
 
 def ping(request):
@@ -56,20 +57,37 @@ def slack_new(request):
     trigger_id = request.POST["trigger_id"]
 
     blog = Blog.objects.get(slack_id=team_id)
+    view = populate_post_modal()
 
     client = WebClient(token=blog.bot_access_token)
-    response = client.views_open(trigger_id=trigger_id, view=NEW_POST)
+    response = client.views_open(trigger_id=trigger_id, view=view)
 
-    return JsonResponse({"message": ""}, status=200)
+    return HttpResponse("")
 
 
 def slack_list():
     return HttpResponse("list")  # TODO #21
 
 
-def slack_edit(post_id):
-    print(post_id)  # TODO
-    return HttpResponse("edit")  # TODO #22
+def slack_edit(request):
+    team_id = request.POST["team_id"]
+    trigger_id = request.POST["trigger_id"]
+
+    post_id = request.POST["text"].split()[1]
+
+    blog = Blog.objects.get(slack_id=team_id)
+    post = Post.objects.get(id=post_id, blog=blog)
+    view = populate_post_modal(
+        private_metadata=2,
+        post_title=post.title,
+        post_body_md=post.body_md,
+        post_category=post.category.slug,
+    )
+
+    client = WebClient(token=blog.bot_access_token)
+    response = client.views_open(trigger_id=trigger_id, view=view)
+
+    return HttpResponse("")
 
 
 def slack_delete(post_id):
