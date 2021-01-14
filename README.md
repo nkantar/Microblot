@@ -42,15 +42,16 @@ I like microblogs. They're neat for sharing short snippets of content. A good ex
 - **Will other platforms be supported?** Sure, if someone contributes support for them. I plan on genericizing the interaction between the Slack API piece and the site content pieces to support that, but I don't personally have a need for this to run anywhere else. Voice your request in an [issue](https://github.com/nkantar/Microblot/issues), though, and we'll see what happens.
 - **How do you plan on making the project sustainable?** Honestly, I'm not sure yet. I've got some ideas for features that would make sense in a paid tier (see [issue #57](https://github.com/nkantar/Microblot/issues/57)), I'd happily accept donations (for hosting costs at least, once it's up and running), and I'm open to other suggestions.
 - **Is it cool if I run it myself?** Sure! Due to resource (read: time) constraints, I don't plan on investing a whole lot into making the project easily runnable anywhere other than the main deployment, but I'm not at all against it. Start a conversation in an [issue](https://github.com/nkantar/Microblot/issues) and let's see what we can do.
-- **Why Python?** Because I like it.
-- **Why Heroku + Netlify instead of own server or cloud?** Least amount of effort and maintenance by a long shot.
+- **Why Python/Django?** Because I like it.
+- **Why Heroku instead of own server or cloud?** Least amount of effort and maintenance by a long shot.
 
 
 ## Contributing
 
-While it's probably a bit early for you to start contributing code, I'd love to know what people think about this. I've also got some [questions](https://github.com/nkantar/Microblot/issues?q=is%3Aissue+is%3Aopen+label%3Aquestion) I specifically still want to think through on which feedback is welcome. If you'd rather get in touch with me privately, you can try [email](mailto:nik@nkantar.com) or [Twitter](https://twitter.com/nkantar).
+While it's probably a bit early for you to start contributing code, I'd love to know what people think about this. I've also got some [questions](https://github.com/nkantar/Microblot/issues?q=is%3Aopen+is%3Aissue+label%3Atype%3Aquestion) I specifically still want to think through on which feedback is welcome. If you'd rather get in touch with me privately, you can try [email](mailto:nik@nkantar.com) or [Twitter](https://twitter.com/nkantar).
 
-Please note that this project is released with a [Contributor Code of Conduct](https://github.com/nkantar/Microblot/blob/master/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms. (See [issue #58](https://github.com/nkantar/Microblot/issues/58).)
+Please note that this project is released with a [Contributor Code of Conduct](https://github.com/nkantar/Microblot/blob/master/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms. (See [issue #88](https://github.com/nkantar/Microblot/issues/88).)
+
 
 ## License
 

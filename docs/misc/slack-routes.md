@@ -4,9 +4,9 @@ These routes are intended for the Slack integration.
 
 | `/microblot` subcommand | API endpoint |
 |:----------------------- |:------------ |
-| `new` | `POST /slack/posts` |
-| `list` | `GET /slack/posts` |
-| `edit <id>` | `PUT /slack/posts/<id>` |
-| `delete <id>` | `DELETE /slack/posts/<id>` |
-| `info` | `GET /slack/info` |
-| `help` | `GET /slack/help` |
+| `new` | `POST /api/slack/posts` |
+| `list` | `GET /api/slack/posts` |
+| `edit <id>` | `PUT /api/slack/posts/<id>` |
+| `delete <id>` | `DELETE /api/slack/posts/<id>` |
+| `info` | `GET /api/slack/info` |
+| `help` | `GET /api/slack/help` |
