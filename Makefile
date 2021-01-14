@@ -23,7 +23,7 @@ devserve: ## [container] run dev server
 	poetry run python manage.py runserver 0.0.0.0:8000
 
 worker: ## [container] run worker process
-	poetry run python manage.py rq worker default
+	poetry run python manage.py rqworker default
 
 build: ## docker-compose build
 	docker-compose build
