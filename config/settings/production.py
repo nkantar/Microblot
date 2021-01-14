@@ -4,4 +4,4 @@ from .base import *  # noqa
 DEBUG = False
 
 DOMAIN = "microblot.io"
-ALLOWED_HOSTS = [f"{DOMAIN}"]
+ALLOWED_HOSTS = [f".{DOMAIN}"]
