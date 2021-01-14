@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help format lint doccheck typecheck test devserve build up upd logs queue down start stop sh
+.PHONY: help format lint doccheck typecheck test devserve worker build up upd logs queue down start stop sh
 
 help: ## this help dialog
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -21,6 +21,9 @@ test: ## [container] run tests with pytest
 
 devserve: ## [container] run dev server
 	poetry run python manage.py runserver 0.0.0.0:8000
+
+worker: ## [container] run worker process
+	poetry run python manage.py rqworker default
 
 build: ## docker-compose build
 	docker-compose build

@@ -5,6 +5,12 @@ services:
     image: postgres
     env_file: .env
 
+  redis:
+    image: redis
+    env_file: .env
+    command: >
+     --requirepass $REDIS_PASSWORD
+
   web:
     build: .
     env_file: .env
@@ -15,3 +21,17 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis
+
+  worker:
+    build: .
+    env_file: .env
+    command: make worker
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - redis
+    deploy:
+      mode: replicated
+      replicas: 2
