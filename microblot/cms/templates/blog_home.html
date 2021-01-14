@@ -1,10 +1,7 @@
-yay, we're on the blog home
+{% extends "blog_base.html" %}
 
-<h1>{{ request.site.name }}</h1>
-
+{% block blog_content %}
 {% for post in posts %}
   {% include "blog_section.html" %}
 {% endfor %}
-
-
-hi?
+{% endblock %}

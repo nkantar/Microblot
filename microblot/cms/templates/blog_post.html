@@ -1,1 +1,7 @@
+{% extends "blog_base.html" %}
+
+{% block title %}{{ post.title }} | {{ request.site.name }} | Microblot.io{% endblock %}
+
+{% block blog_content %}
 {% include "blog_section.html" %}
+{% endblock %}
