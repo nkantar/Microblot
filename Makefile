@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help format lint doccheck typecheck test devserve worker build up upd logs queue down start stop sh
+.PHONY: help format lint doccheck typecheck test devserve worker build up upd logs queue down start stop sh djsh
 
 help: ## this help dialog
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -51,3 +51,6 @@ stop: ## docker-compose stop
 
 sh: ## docker-compose run --rm web /bin/sh
 	docker-compose run --rm web /bin/sh
+
+djsh: ## docker-compose run --rm web poetry run python manage.py shell
+	docker-compose run --rm web poetry run python manage.py shell
