@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "microblot.core",
     "microblot.cms",
 ]
@@ -131,3 +132,5 @@ RESERVED_SUBOMAINS = [
     "https",
     "www",
 ]
+
+SHORT_CODE_LENGTH = 8
