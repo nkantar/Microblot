@@ -20,7 +20,7 @@ test: ## [container] run tests with pytest
 	poetry run pytest --cov=microblot tests/
 
 devserve: ## [container] run dev server
-	poetry run uvicorn microblot.app:app --host 0.0.0.0 --port 8000 --reload
+	poetry run python manage.py runserver 0.0.0.0:8000
 
 build: ## docker-compose build
 	docker-compose build
