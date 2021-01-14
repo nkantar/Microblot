@@ -1,3 +1,5 @@
+from os import getenv
+
 from .base import *  # noqa
 
 
@@ -13,3 +15,13 @@ INSTALLED_APPS += [  # noqa
 MIDDLEWARE += [  # noqa
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+
+RQ_QUEUES = {
+    "default": {
+        "HOST": "redis",
+        "PORT": 6379,
+        "DB": 0,
+        "PASSWORD": getenv("REDIS_PASSWORD"),
+    }
+}
