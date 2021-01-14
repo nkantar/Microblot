@@ -5,8 +5,9 @@ from .base import *  # noqa
 
 DEBUG = True
 
-DOMAIN = "microblot.local"
-ALLOWED_HOSTS = [f".{DOMAIN}"]
+MAIN_DOMAIN = "microblot.local"
+SHORT_DOMAIN = "blot.local"
+ALLOWED_HOSTS = [f".{MAIN_DOMAIN}", f".{SHORT_DOMAIN}"]
 
 INSTALLED_APPS += [  # noqa
     "debug_toolbar",
