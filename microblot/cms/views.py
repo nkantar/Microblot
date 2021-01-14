@@ -22,7 +22,7 @@ class BlogPostView(DetailView):
     def get_object(self, queryset=None):
         post = self.model.objects.get(
             blog__site_id=self.request.site.id,
-            short_code=self.request.GET.get("post_short_code", "1e76fd68"),
+            short_code=self.kwargs.get("post_short_code"),
         )
         return post
 
