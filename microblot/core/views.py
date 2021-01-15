@@ -9,9 +9,9 @@ def dispatch(request, main_class=None, cms_class=None, short_class=None, **kwarg
         settings.SHORT_DOMAIN: short_class,
         f"www.{settings.SHORT_DOMAIN}": short_class,
     }
-    class_ = classes.get(request.site.domain, cms_class)
+    target_class = classes.get(request.site.domain, cms_class)
 
-    if class_ is None:
+    if target_class is None:
         raise Http404()
 
-    return class_.as_view()(request, **kwargs)
+    return target_class.as_view()(request, **kwargs)
