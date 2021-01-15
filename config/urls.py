@@ -37,9 +37,7 @@ urlpatterns = [
         "posts/<post_short_code>",
         dispatch,
         {
-            "main_class": None,
             "cms_class": BlogPostView,
-            "short_class": None,
         },
         name="dispatch-post",
     ),
@@ -47,8 +45,6 @@ urlpatterns = [
         "<post_short_code>",
         dispatch,
         {
-            "main_class": None,
-            "cms_class": None,
             "short_class": ShortenerRedirectView,
         },
         name="dispatch-short",
