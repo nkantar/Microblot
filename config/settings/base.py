@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "microblot.cms",
     "microblot.core",
     "microblot.main",
+    "microblot.shortener",
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,5 @@ RESERVED_SUBOMAINS = [
 ]
 
 SHORT_CODE_LENGTH = 8
+
+ENVIRONMENT = getenv("ENVIRONMENT")

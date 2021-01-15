@@ -20,6 +20,7 @@ from django.conf import settings
 from microblot.cms.views import BlogHomeView, BlogPostView
 from microblot.core.views import dispatch
 from microblot.main.views import MainHomeView
+from microblot.shortener.views import ShortenerHomeRedirectView, ShortenerRedirectView
 
 urlpatterns = [
     path(
@@ -28,7 +29,7 @@ urlpatterns = [
         {
             "main_class": MainHomeView,
             "cms_class": BlogHomeView,
-            "short_class": None,
+            "short_class": ShortenerHomeRedirectView,
         },
         name="dispatch-home",
     ),
@@ -42,7 +43,18 @@ urlpatterns = [
         },
         name="dispatch-post",
     ),
+    path(
+        "<post_short_code>",
+        dispatch,
+        {
+            "main_class": None,
+            "cms_class": None,
+            "short_class": ShortenerRedirectView,
+        },
+        name="dispatch-short",
+    ),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += [

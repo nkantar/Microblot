@@ -76,3 +76,6 @@ class Post(TimestampedModel):
     category = ForeignKey(Category, on_delete=CASCADE)
 
     objects = PostManager()
+
+    def get_absolute_url(self):
+        return f"{settings.SCHEME}://{self.blog.site.domain}{settings.PORT}/posts/{self.short_code}"
