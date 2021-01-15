@@ -11,7 +11,7 @@ class ShortenerHomeRedirectView(RedirectView):
         return url
 
 
-class ShortenerRedirectView(RedirectView):
+class ShortenerPostRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         post = get_object_or_404(Post, short_code=kwargs.get("post_short_code"))
         url = redirect(post).url
