@@ -34,8 +34,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django_rq",
-    "microblot.core",
     "microblot.cms",
+    "microblot.core",
     "microblot.main",
 ]
 
