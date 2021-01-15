@@ -3,6 +3,6 @@
 {% block title %}{{ request.site.name }} | Microblot.io{% endblock %}
 
 {% block content %}
-<a href="{% url 'blog-home' %}"><h1>{{ request.site.name }}</h1></a>
+<a href="{# url 'blog-home' #}"><h1>{{ request.site.name }}</h1></a>
 {% block blog_content %}{% endblock %}
 {% endblock %}

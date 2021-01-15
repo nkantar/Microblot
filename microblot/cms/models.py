@@ -19,7 +19,7 @@ from microblot.core.models import TimestampedModel, SlugifiedModel
 class BlogManager(Manager):
     @classmethod
     def create_blog(cls, slug, name):
-        site = Site.objects.create(domain=f"{slug}.{settings.MAIN_DOMAIN}", name=name)
+        site = Site.objects.create(domain=f"{slug}.{settings.FULL_DOMAIN}", name=name)
         blog = Blog.objects.create(slug=slug, site=site)
         return blog
 

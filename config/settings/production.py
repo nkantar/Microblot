@@ -3,6 +3,6 @@ from .base import *  # noqa
 
 DEBUG = False
 
-MAIN_DOMAIN = "microblot.io"
+FULL_DOMAIN = "microblot.io"
 SHORT_DOMAIN = "blot.click"
-ALLOWED_HOSTS = [f".{MAIN_DOMAIN}", f".{SHORT_DOMAIN}"]
+ALLOWED_HOSTS = [f".{FULL_DOMAIN}", f".{SHORT_DOMAIN}"]

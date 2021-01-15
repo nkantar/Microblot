@@ -14,11 +14,34 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import path
 from django.conf import settings
 
+from microblot.cms.views import BlogHomeView, BlogPostView
+from microblot.core.views import dispatch
+from microblot.main.views import MainHomeView
+
 urlpatterns = [
-    path("", include("microblot.cms.urls")),
+    path(
+        "",
+        dispatch,
+        {
+            "main_class": MainHomeView,
+            "cms_class": BlogHomeView,
+            "short_class": None,
+        },
+        name="dispatch-home",
+    ),
+    path(
+        "posts/<post_short_code>",
+        dispatch,
+        {
+            "main_class": None,
+            "cms_class": BlogPostView,
+            "short_class": None,
+        },
+        name="dispatch-post",
+    ),
 ]
 
 if settings.DEBUG:
