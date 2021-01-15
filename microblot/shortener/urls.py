@@ -5,7 +5,7 @@ from microblot.core.views import dispatch
 from .views import ShortenerPostRedirectView
 
 
-# NOTE: See microblot.config.urls for some shared routes.
+# NOTE: See config/urls.py for some shared routes.
 
 
 urlpatterns = [
