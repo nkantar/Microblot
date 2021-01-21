@@ -12,6 +12,7 @@ psycopg2-binary = "^2.8.6"
 rq = "^1.7.0"
 Markdown = "^3.3.3"
 django-rq = "^2.4.0"
+switchlang = "^0.1.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.4"
