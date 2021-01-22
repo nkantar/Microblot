@@ -1,3 +1,5 @@
+from switchlang import switch
+
 from django.conf import settings
 from django.http import Http404
 
@@ -12,15 +14,19 @@ def dispatch(request, main_class=None, cms_class=None, short_class=None, **kwarg
 
     Each of the "_class" params corresponds to a view class for the desired app.
     """
-    classes = {
-        settings.FULL_DOMAIN: main_class,
-        f"www.{settings.FULL_DOMAIN}": main_class,
-        settings.SHORT_DOMAIN: short_class,
-        f"www.{settings.SHORT_DOMAIN}": short_class,
-    }
-    target_class = classes.get(request.site.domain, cms_class)
 
-    if target_class is None:
+    def class_as_view(target_class):
+        if target_class is None:
+            raise Http404()
+
+        return lambda: target_class.as_view()(request, **kwargs)
+
+    with switch(request.site.domain) as domain:
+        domain.case(settings.FULL_DOMAINS, lambda: main_class)
+        domain.case(settings.SHORT_DOMAINS, lambda: short_class)
+        domain.default(lambda: cms_class)
+
+    if domain.result is None:
         raise Http404()
 
-    return target_class.as_view()(request, **kwargs)
+    return domain.result.as_view()(request, **kwargs)
