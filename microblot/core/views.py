@@ -6,6 +6,16 @@ from django.views.generic import View
 
 
 class PageNotFoundView(View):
+    """
+    Fallback view for the dispatch helper below.
+
+    All this view does is return a 404, and its sole purpose is decluttering the
+    dispatch helper view defined below.
+
+    By using it as the default value for parameters to dispatch, dispatch doesn't have
+    to explicitly account for omitted classes, and can just call the as_view method.
+    """
+
     def dispatch(self, request, *args, **kwargs):
         raise Http404()
 
