@@ -2,9 +2,21 @@ from switchlang import switch
 
 from django.conf import settings
 from django.http import Http404
+from django.views.generic import View
 
 
-def dispatch(request, main_class=None, cms_class=None, short_class=None, **kwargs):
+class PageNotFoundView(View):
+    def dispatch(self, request, *args, **kwargs):
+        raise Http404()
+
+
+def dispatch(
+    request,
+    main_class=PageNotFoundView,
+    cms_class=PageNotFoundView,
+    short_class=PageNotFoundView,
+    **kwargs
+):
     """
     Delegate to the correct class based on the current site.
 
@@ -19,8 +31,4 @@ def dispatch(request, main_class=None, cms_class=None, short_class=None, **kwarg
         app.case(settings.SHORT_DOMAINS, lambda: short_class)
         app.default(lambda: cms_class)
 
-    try:
-        return app.result.as_view()(request, **kwargs)
-
-    except AttributeError:
-        raise Http404()
+    return app.result.as_view()(request, **kwargs)
