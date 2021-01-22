@@ -10,7 +10,7 @@ from .views import ShortenerPostRedirectView
 
 urlpatterns = [
     path(
-        "<post_short_code>",
+        "<post_short_code>/",
         dispatch,
         {
             "short_class": ShortenerPostRedirectView,

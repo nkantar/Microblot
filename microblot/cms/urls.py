@@ -10,7 +10,7 @@ from .views import BlogPostView, PostsRedirectView
 
 urlpatterns = [
     path(
-        "posts/<post_short_code>",
+        "posts/<post_short_code>/",
         dispatch,
         {
             "cms_class": BlogPostView,
