@@ -1,5 +1,5 @@
 <div>
-  <a href="{# url 'blog-post' post.short_code #}"><h2>{{ post.title }}</h2></a>
+  <a href="{% url 'dispatch-post' post.short_code %}"><h2>{{ post.title }}</h2></a>
   <h6>posted {{ post.created_at}} by {{ post.author.name }}</h6>
   <div>{{ post.body_html|safe }}</div>
 </div>
