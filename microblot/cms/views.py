@@ -1,4 +1,4 @@
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, RedirectView
 
 from .models import Post
 
@@ -29,3 +29,8 @@ class BlogPostView(DetailView):
 
 # class BlogCategoryView(ListView)
 # class BlogAuthorView(ListView)
+
+
+class PostsRedirectView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        return "/"
