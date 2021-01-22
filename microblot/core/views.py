@@ -19,7 +19,8 @@ def dispatch(request, main_class=None, cms_class=None, short_class=None, **kwarg
         app.case(settings.SHORT_DOMAINS, lambda: short_class)
         app.default(lambda: cms_class)
 
-    if app.result is None:
-        raise Http404()
+    try:
+        return app.result.as_view()(request, **kwargs)
 
-    return app.result.as_view()(request, **kwargs)
+    except AttributeError:
+        raise Http404()
