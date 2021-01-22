@@ -25,7 +25,7 @@ def dispatch(
     main_class=PageNotFoundView,
     cms_class=PageNotFoundView,
     short_class=PageNotFoundView,
-    **kwargs
+    **kwargs,
 ):
     """
     Delegate to the correct class based on the current site.
