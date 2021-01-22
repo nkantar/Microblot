@@ -14,13 +14,12 @@ def dispatch(request, main_class=None, cms_class=None, short_class=None, **kwarg
 
     Each of the "_class" params corresponds to a view class for the desired app.
     """
+    with switch(request.site.domain) as app:
+        app.case(settings.FULL_DOMAINS, lambda: main_class)
+        app.case(settings.SHORT_DOMAINS, lambda: short_class)
+        app.default(lambda: cms_class)
 
-    with switch(request.site.domain) as domain:
-        domain.case(settings.FULL_DOMAINS, lambda: main_class)
-        domain.case(settings.SHORT_DOMAINS, lambda: short_class)
-        domain.default(lambda: cms_class)
-
-    if domain.result is None:
+    if app.result is None:
         raise Http404()
 
-    return domain.result.as_view()(request, **kwargs)
+    return app.result.as_view()(request, **kwargs)
