@@ -27,7 +27,24 @@ class BlogPostView(DetailView):
         return post
 
 
-# class BlogCategoryView(ListView)
+class BlogCategoryView(ListView):
+    context_object_name = "posts"
+    model = Post
+    template_name = "category_page.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogCategoryView, self).get_context_data(**kwargs)
+        context["category_slug"] = self.kwargs["category_slug"]
+        return context
+
+    def get_queryset(self):
+        queryset = self.model.objects.filter(
+            blog__site_id=self.request.site.id,
+            category__slug=self.kwargs["category_slug"],
+        ).order_by("-created_at")
+        return queryset
+
+
 # class BlogAuthorView(ListView)
 
 
