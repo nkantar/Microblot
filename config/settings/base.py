@@ -130,10 +130,12 @@ STATIC_URL = "/static/"
 
 RESERVED_SUBOMAINS = [
     "admin",
+    "blot",
     "cp",
     "dev",
     "http",
     "https",
+    "microblot",
     "www",
 ]
 
