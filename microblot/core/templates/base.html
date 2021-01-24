@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,12 +24,18 @@
     <!-- <link rel="shortcut icon" href="TODO" /> -->
     <!-- <link rel="apple-touch-icon" href="TODO" /> -->
 
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}" />
     <!-- <link rel="stylesheet" type="text/css" href="/static/normalize.css" /> -->
     <!-- <link rel="stylesheet" type="text/css" href="/static/style.css" /> -->
   </head>
   <body>
-    <h1>Microblot.io</h1>
-    <hr>
-    {% block content %}{% endblock %}
+    <header>
+      {% block header_title %}<a href="https://www.microblot.io">Microblot.io</a>{% endblock %}
+      <span class="right"><a href="{% url 'dispatch-feed' %}">Feed</a></span>
+    </header>
+    <section>
+      <div class="page_title">{% block page_title %}{% endblock %}</div>
+      {% block content %}{% endblock %}
+    </section>
   </body>
 </html>

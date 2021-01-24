@@ -1,5 +1,5 @@
-<div>
-  <a href="{% url 'dispatch-post' post.short_code %}"><h2>{{ post.title }}</h2></a>
-  <h6>posted {{ post.created_at}} by {{ post.author.name }}</h6>
+<article>
+  <a class="header" href="{% url 'dispatch-post' post.short_code %}"><h1>{{ post.title }}</h1></a>
+  <h5>Posted by <a href="{% url 'dispatch-author' post.author.slug %}">{{ post.author.name }}</a> on <a href="{% url 'dispatch-post' post.short_code %}">{{ post.created_at }}</a> in <a href="{% url 'dispatch-category' post.category.slug %}">{{ post.category.slug }}</a>.</h5>
   <div>{{ post.body_html|safe }}</div>
-</div>
+</article>

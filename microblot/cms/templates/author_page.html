@@ -1,6 +1,8 @@
 {% extends "blog_base.html" %}
 
-{% block title %}{{ author.name }} ({{ author.slug }}) | {{ request.site.name }} | Microblot.io{% endblock %}
+{% block title %}{{ author.name }} &laquo; {{ request.site.name }} &laquo; Microblot.io{% endblock %}
+{% block header_title %}<a href="https://www.microblot.io">Microblot.io</a> <span class="separator">&raquo;</span> <a href="/">{{ request.site.name }}</a> <span class="separator">&raquo;</span> <a href="{% url 'dispatch-author' author.slug %}">{{ author.name }}</a>{% endblock %}
+{% block page_title %}<a class="header" href="{% url 'dispatch-author' author.slug %}"><h1>{{ author.name }}</h1></a>{% endblock %}
 
 {% block blog_content %}
 {% for post in posts %}

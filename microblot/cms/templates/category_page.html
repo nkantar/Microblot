@@ -1,6 +1,8 @@
 {% extends "blog_base.html" %}
 
-{% block title %}#{{ category_slug}} | {{ request.site.name }} | Microblot.io{% endblock %}
+{% block title %}#{{ category_slug}} &laquo; {{ request.site.name }} &laquo; Microblot.io{% endblock %}
+{% block header_title %}<a href="https://www.microblot.io">Microblot.io</a> <span class="separator">&raquo;</span> <a href="/">{{ request.site.name }}</a> <span class="separator">&raquo;</span> <a href="{% url 'dispatch-category' category_slug %}">#{{ category_slug }}</a>{% endblock %}
+{% block page_title %}<a class="header" href="{% url 'dispatch-category' category_slug %}"><h1>#{{ category_slug }}</h1></a>{% endblock %}
 
 {% block blog_content %}
 {% for post in posts %}
