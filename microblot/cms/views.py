@@ -15,6 +15,11 @@ class BlogHomeView(ListView):
         return queryset
 
 
+class BlogFeedView(BlogHomeView):
+    content_type = "application/atom+xml"
+    template_name = "feed.xml"
+
+
 class BlogPostView(DetailView):
     model = Post
     template_name = "blog_post.html"
