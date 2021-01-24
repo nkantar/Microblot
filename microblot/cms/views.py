@@ -15,9 +15,17 @@ class BlogHomeView(ListView):
         return queryset
 
 
-class BlogFeedView(BlogHomeView):
+class BlogFeedView(ListView):
+    context_object_name = "posts"
+    model = Post
     content_type = "application/atom+xml"
     template_name = "feed.xml"
+
+    def get_queryset(self):
+        queryset = self.model.objects.filter(
+            blog__site_id=self.request.site.id
+        ).order_by("-created_at")[:10]
+        return queryset
 
 
 class BlogPostView(DetailView):
