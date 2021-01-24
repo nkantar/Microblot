@@ -34,4 +34,4 @@ services:
       - redis
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
