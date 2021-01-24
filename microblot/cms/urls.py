@@ -2,7 +2,7 @@ from django.urls import path
 
 from microblot.core.views import dispatch
 
-from .views import BlogPostView, BlogCategoryView, PostsRedirectView
+from .views import BlogCategoryView, BlogPostView, PostsRedirectView
 
 
 # NOTE: See config/urls.py for some shared routes.
