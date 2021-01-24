@@ -55,7 +55,7 @@ class PostManager(Manager):
 
         post = Post.objects.create(
             title=title,
-            body_markdown=markdown,
+            body_markdown=body,
             body_html=html,
             short_code=short_code,
             blog_id=author.blog_id,
