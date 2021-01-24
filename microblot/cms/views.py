@@ -79,6 +79,27 @@ class BlogAuthorView(ListView):
         return queryset
 
 
+class BlogAuthorFeedView(ListView):
+    context_object_name = "posts"
+    model = Post
+    template_name = "author_feed.xml"
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogAuthorFeedView, self).get_context_data(**kwargs)
+        context["author"] = Author.objects.get(
+            slug=self.kwargs["author_slug"],
+            blog__site_id=self.request.site.id,
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = self.model.objects.filter(
+            blog__site_id=self.request.site.id,
+            author__slug=self.kwargs["author_slug"],
+        ).order_by("-created_at")[:10]
+        return queryset
+
+
 class PostsRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         return "/"

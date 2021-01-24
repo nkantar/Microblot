@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'>
+  <title>{{ author.name }} ({{ author.slug }}) | {{ request.site.name }} | Microblot.io</title>
+  <link href='https://{{ request.site.domain }}/authors/{{ author.slug }}/feed/' rel='self' />
+  <link href='https://{{ request.site.domain }}/authors/{{ author.slug }}' />
+  <updated>{{ posts.0.updated_at|date:"c" }}</updated>
+  <author>
+  <name>{{ author.name }}</name>
+  </author>
+  <id>https://{{ request.site.domain }}/</id>
+  {% for post in posts %}
+    <entry>
+      <title>{{ post.title|safe }}</title>
+      <link href='https://{{ request.site.domain }}/posts/{{ post.short_code }}' />
+      <id>https://{{ request.site.domain }}/posts/{{ post.short_code }}</id>
+      <updated>{{ post.updated_at|date:"c" }}</updated>
+      <content type='html'><![CDATA[{{ post.body_html|safe }}]]></content>
+    </entry>
+  {% endfor %}
+</feed>
+

@@ -4,6 +4,7 @@ from microblot.core.views import dispatch
 
 from .views import (
     BlogAuthorView,
+    BlogAuthorFeedView,
     BlogCategoryView,
     BlogFeedView,
     BlogPostView,
@@ -46,6 +47,14 @@ urlpatterns = [
             "cms_class": BlogAuthorView,
         },
         name="dispatch-author",
+    ),
+    path(
+        "authors/<author_slug>/feed/",
+        dispatch,
+        {
+            "cms_class": BlogAuthorFeedView,
+        },
+        name="dispatch-author-feed",
     ),
     path(
         "feed/",
