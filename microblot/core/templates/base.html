@@ -31,7 +31,9 @@
   <body>
     <header>
       {% block header_title %}<a href="https://www.microblot.io">Microblot.io</a>{% endblock %}
-      <span class="right"><a href="{% url 'dispatch-feed' %}">Feed</a></span>
+      {% if request.site.domain != "www.microblot.local" %}
+        <span class="right"><a href="{% url 'dispatch-feed' %}">Feed</a></span>
+      {% endif %}
     </header>
     <section>
       <div class="page_title">{% block page_title %}{% endblock %}</div>
