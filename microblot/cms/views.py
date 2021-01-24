@@ -1,6 +1,6 @@
 from django.views.generic import DetailView, ListView, RedirectView
 
-from .models import Post
+from .models import Author, Post
 
 
 class BlogHomeView(ListView):
@@ -45,7 +45,25 @@ class BlogCategoryView(ListView):
         return queryset
 
 
-# class BlogAuthorView(ListView)
+class BlogAuthorView(ListView):
+    context_object_name = "posts"
+    model = Post
+    template_name = "author_page.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogAuthorView, self).get_context_data(**kwargs)
+        context["author"] = Author.objects.get(
+            slug=self.kwargs["author_slug"],
+            blog__site_id=self.request.site.id,
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = self.model.objects.filter(
+            blog__site_id=self.request.site.id,
+            author__slug=self.kwargs["author_slug"],
+        ).order_by("-created_at")
+        return queryset
 
 
 class PostsRedirectView(RedirectView):

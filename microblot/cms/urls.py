@@ -2,7 +2,7 @@ from django.urls import path
 
 from microblot.core.views import dispatch
 
-from .views import BlogCategoryView, BlogPostView, PostsRedirectView
+from .views import BlogAuthorView, BlogPostView, BlogCategoryView, PostsRedirectView
 
 
 # NOTE: See config/urls.py for some shared routes.
@@ -32,5 +32,13 @@ urlpatterns = [
             "cms_class": BlogCategoryView,
         },
         name="dispatch-category",
+    ),
+    path(
+        "authors/<author_slug>/",
+        dispatch,
+        {
+            "cms_class": BlogAuthorView,
+        },
+        name="dispatch-author",
     ),
 ]
