@@ -135,6 +135,7 @@ RESERVED_SUBOMAINS = [
     "dev",
     "http",
     "https",
+    "local",
     "microblot",
     "www",
 ]
