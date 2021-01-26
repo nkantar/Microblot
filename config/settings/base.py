@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "microblot.core",
     "microblot.main",
     "microblot.shortener",
+    "microblot.slack",
 ]
 
 MIDDLEWARE = [

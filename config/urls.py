@@ -20,6 +20,7 @@ urlpatterns = [
     ),
     path("", include("microblot.cms.urls")),
     path("", include("microblot.shortener.urls")),
+    path("api/slack/", include("microblot.slack.urls")),
 ]
 
 
