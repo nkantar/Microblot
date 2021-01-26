@@ -2,6 +2,7 @@ from switchlang import switch
 
 from django.conf import settings
 from django.http import Http404
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
 
@@ -20,6 +21,7 @@ class PageNotFoundView(View):
         raise Http404()
 
 
+@csrf_exempt
 def dispatch(
     request,
     main_class=PageNotFoundView,
