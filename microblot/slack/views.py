@@ -8,9 +8,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
-from microblot.cms.models import Blog, Post
-
-from . import actionables
+from . import commands, interactions
 
 
 def verify_slack_signature(func):
@@ -48,20 +46,16 @@ class SlackCommandView(View):
     @csrf_exempt
     @verify_slack_signature
     def post(self, request, *args, **kwargs):
-        command, *params = request.POST.get("text").split(maxsplit=1)
-
-        actionable = getattr(actionables, f"command_{command}")
-
-        actionable(
+        slack_command, *params = request.POST.get("text").split(maxsplit=1)
+        command = getattr(commands, slack_command, commands.help)
+        command(
             team_id=request.POST.get("team_id"),
             user_id=request.POST.get("user_id"),
-            action=command,
-            params=params,
             token=request.POST.get("token"),
             response_url=request.POST.get("response_url"),
             trigger_id=request.POST.get("trigger_id"),
+            params=params,
         )
-
         return HttpResponse()
 
 
@@ -77,28 +71,16 @@ class SlackInteractiveView(View):
     @csrf_exempt
     @verify_slack_signature
     def post(self, request, *args, **kwargs):
-        print(request.POST)
-
-        submissions = request.POST["payload"]
-
-        for submission_str in submissions:
-            submission = json.loads(submission_str)
-
-            modal_data = {
-                key: submission["view"]["state"]["values"]["key"]["value"]
-                for key in submission["view"]["state"]["values"]
-            }
-
-            params = {
-                "modal_type": submission["view"]["callback_id"],
-                "private_metadata": submission["view"]["private_metadata"],
-                "modal_data": modal_data,
-            }
-
-            interaction = SlackInteraction(
-                team_id=submission["team"]["id"],
-                user_id=submission["user"]["id"],
-                action="new_post",
-                params=params,
-            )
-            interaction.execute()
+        submission = json.loads(request.POST["payload"])
+        modal_data = {
+            key: submission["view"]["state"]["values"][key][f"{key}_action"]["value"]
+            for key in submission["view"]["state"]["values"]
+        }
+        modal_callback_id = submission["view"]["callback_id"]
+        interaction = getattr(interactions, modal_callback_id)
+        interaction(
+            team_id=submission["team"]["id"],
+            user_id=submission["user"]["id"],
+            modal_data=modal_data,
+        )
+        return HttpResponse()
