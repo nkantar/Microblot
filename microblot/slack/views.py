@@ -8,7 +8,9 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
-from .actionables import SlackCommand, SlackInteraction
+from microblot.cms.models import Blog, Post
+
+from . import actionables
 
 
 def verify_slack_signature(func):
@@ -46,8 +48,11 @@ class SlackCommandView(View):
     @csrf_exempt
     @verify_slack_signature
     def post(self, request, *args, **kwargs):
-        command, params = request.POST.get("text").split(maxsplit=1)
-        slack_command = SlackCommand(
+        command, *params = request.POST.get("text").split(maxsplit=1)
+
+        actionable = getattr(actionables, f"command_{command}")
+
+        actionable(
             team_id=request.POST.get("team_id"),
             user_id=request.POST.get("user_id"),
             action=command,
@@ -56,7 +61,7 @@ class SlackCommandView(View):
             response_url=request.POST.get("response_url"),
             trigger_id=request.POST.get("trigger_id"),
         )
-        slack_command.execute()
+
         return HttpResponse()
 
 
