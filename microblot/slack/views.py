@@ -82,15 +82,23 @@ class SlackInteractiveView(View):
     @verify_slack_signature
     def post(self, request, *args, **kwargs):
         submission = json.loads(request.POST["payload"])
+
         modal_data = {
             key: submission["view"]["state"]["values"][key][f"{key}_action"]["value"]
             for key in submission["view"]["state"]["values"]
         }
+
         modal_callback_id = submission["view"]["callback_id"]
+
         interaction = getattr(interactions, modal_callback_id)
-        interaction(
+
+        response = interaction(
             team_id=submission["team"]["id"],
             user_id=submission["user"]["id"],
             modal_data=modal_data,
         )
+
+        if response is not None:
+            return response
+
         return HttpResponse()
