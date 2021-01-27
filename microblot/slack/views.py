@@ -46,9 +46,15 @@ class SlackCommandView(View):
     @csrf_exempt
     @verify_slack_signature
     def post(self, request, *args, **kwargs):
-        slack_command, *params = request.POST.get("text").split(maxsplit=1)
-        command = getattr(commands, slack_command, commands.help)
-        command(
+        try:
+            slack_command, *params = request.POST.get("text").split(maxsplit=1)
+        except ValueError:
+            slack_command = "help"
+            params = []
+
+        command = getattr(commands, f"command_{slack_command}", commands.command_help)
+
+        response = command(
             team_id=request.POST.get("team_id"),
             user_id=request.POST.get("user_id"),
             token=request.POST.get("token"),
@@ -56,6 +62,10 @@ class SlackCommandView(View):
             trigger_id=request.POST.get("trigger_id"),
             params=params,
         )
+
+        if response is not None:
+            return response
+
         return HttpResponse()
 
 
