@@ -44,7 +44,7 @@ class Category(TimestampedModel, SlugifiedModel):
 
 class PostManager(Manager):
     @classmethod
-    def create_post(cls, title, body, author_id, category_id):
+    def create_post(cls, title, body, author_id, category_slug):
         html = markdown.markdown(body)
 
         # TODO ensure short_code is unique
@@ -53,6 +53,8 @@ class PostManager(Manager):
 
         author = Author.objects.get(pk=author_id)
 
+        category, unused_created = Category.objects.get_or_create(slug=category_slug)
+
         post = Post.objects.create(
             title=title,
             body_markdown=body,
@@ -60,7 +62,7 @@ class PostManager(Manager):
             short_code=short_code,
             blog_id=author.blog_id,
             author_id=author_id,
-            category_id=category_id,
+            category_id=category.id,
         )
         return post
 
