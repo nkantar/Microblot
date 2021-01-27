@@ -8,7 +8,7 @@ from django.db import migrations
 
 def create_sites(apps, schema_editor):
     # clear out example.com
-    Site.objects.all().delete()
+    Site.objects.get(domain="example.com").delete()
 
     # make all sites for given environment
     for domain in settings.ALL_DOMAINS:
