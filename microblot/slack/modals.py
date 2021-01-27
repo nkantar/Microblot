@@ -28,16 +28,16 @@ POST_MODAL_TEMPLATE = Template(
                 },
                 {
                     "type": "input",
-                    "block_id": "post_body_md",
+                    "block_id": "post_body",
                     "element": {
                         "type": "plain_text_input",
-                        "action_id": "post_body_md_action",
+                        "action_id": "post_body_action",
                         "multiline": True,
                         "placeholder": {
                             "type": "plain_text",
                             "text": "Mind blowing post goes here",
                         },
-                        "initial_value": "$post_body_md",
+                        "initial_value": "$post_body",
                     },
                     "label": {"type": "plain_text", "text": "Body"},
                     "hint": {
@@ -69,13 +69,14 @@ def populate_post_modal(
     modal_type="",
     private_metadata="",
     post_title="",
-    post_body_md="",
+    post_body="",
     post_category="",
 ):
-    POST_MODAL_TEMPLATE.substitute(
+    modal = POST_MODAL_TEMPLATE.substitute(
         modal_type=modal_type,
         private_metadata=private_metadata,
         post_title=post_title,
-        post_body_md=post_body_md,
+        post_body=post_body,
         post_category=post_category,
     )
+    return modal
