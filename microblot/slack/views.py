@@ -88,6 +88,12 @@ class SlackInteractiveView(View):
             for key in submission["view"]["state"]["values"]
         }
 
+        try:
+            private_metadata = submission["view"]["private_metadata"]
+        # if there's no private metadata, it's an empty string
+        except json.decoder.JSONDecodeError:
+            private_metadata = ""
+
         modal_callback_id = submission["view"]["callback_id"]
 
         interaction = getattr(interactions, modal_callback_id)
@@ -96,6 +102,7 @@ class SlackInteractiveView(View):
             team_id=submission["team"]["id"],
             user_id=submission["user"]["id"],
             modal_data=modal_data,
+            private_metadata=private_metadata,
         )
 
         if response is not None:
