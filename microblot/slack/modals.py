@@ -20,7 +20,7 @@ POST_MODAL_TEMPLATE = Template(
                         "action_id": "post_title_action",
                         "placeholder": {
                             "type": "plain_text",
-                            "text": "Witty title goes here",
+                            "text": "Witty title goes here.",
                         },
                         "initial_value": "$post_title",
                     },
@@ -35,7 +35,7 @@ POST_MODAL_TEMPLATE = Template(
                         "multiline": True,
                         "placeholder": {
                             "type": "plain_text",
-                            "text": "Mind blowing post goes here",
+                            "text": "Mind blowing post goes here. Markdown supported.",
                         },
                         "initial_value": "$post_body",
                     },
@@ -53,7 +53,7 @@ POST_MODAL_TEMPLATE = Template(
                         "action_id": "post_category_action",
                         "placeholder": {
                             "type": "plain_text",
-                            "text": "Sensible category goes here",
+                            "text": "Sensible category goes here.",
                         },
                         "initial_value": "$post_category",
                     },
