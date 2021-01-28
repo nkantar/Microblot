@@ -27,6 +27,25 @@ MIDDLEWARE += [  # noqa
 ]
 
 
+##################################################
+# Slack
+
+SLACK_SIGNING_SECRET = getenv("SLACK_SIGNING_SECRET")
+SLACK_VERIFICATION_TOKEN = getenv("SLACK_VERIFICATION_TOKEN")
+
+
+##################################################
+# ngrok
+
+NGROK_DOMAIN = getenv("NGROK_DOMAIN")
+ALL_DOMAINS.append(NGROK_DOMAIN)
+ALLOWED_HOSTS.append(NGROK_DOMAIN)
+FULL_DOMAINS.append(NGROK_DOMAIN)
+
+
+##################################################
+# rq
+
 RQ_QUEUES = {
     "default": {
         "HOST": "redis",
@@ -35,13 +54,4 @@ RQ_QUEUES = {
         "PASSWORD": getenv("REDIS_PASSWORD"),
     }
 }
-
-# Slack
-SLACK_SIGNING_SECRET = getenv("SLACK_SIGNING_SECRET")
-SLACK_VERIFICATION_TOKEN = getenv("SLACK_VERIFICATION_TOKEN")
-
-# ngrok
-NGROK_DOMAIN = getenv("NGROK_DOMAIN")
-ALL_DOMAINS.append(NGROK_DOMAIN)
-ALLOWED_HOSTS.append(NGROK_DOMAIN)
-FULL_DOMAINS.append(NGROK_DOMAIN)
+RQ_ENABLED = bool(getenv("RQ_ENABLED", True))
