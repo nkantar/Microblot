@@ -1,6 +1,4 @@
-from django.contrib import admin
 from django.urls import include, path
-from django.conf import settings
 
 from microblot.cms.views import BlogHomeView
 from microblot.core.views import dispatch
@@ -22,9 +20,3 @@ urlpatterns = [
     path("", include("microblot.shortener.urls")),
     path("api/slack/", include("microblot.slack.urls")),
 ]
-
-
-if settings.DEBUG:
-    urlpatterns += [
-        path("admin/", admin.site.urls),
-    ]
