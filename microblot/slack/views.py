@@ -8,6 +8,8 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
+from microblot.core.queue import enqueue
+
 from . import commands, interactions
 
 
@@ -53,18 +55,15 @@ class SlackCommandView(View):
             params = []
 
         command = getattr(commands, f"command_{slack_command}", commands.command_help)
-
-        response = command(
-            team_id=request.POST.get("team_id"),
-            user_id=request.POST.get("user_id"),
-            token=request.POST.get("token"),
-            response_url=request.POST.get("response_url"),
-            trigger_id=request.POST.get("trigger_id"),
-            params=params,
-        )
-
-        if response is not None:
-            return response
+        command_kwargs = {
+            "team_id": request.POST.get("team_id"),
+            "user_id": request.POST.get("user_id"),
+            "token": request.POST.get("token"),
+            "response_url": request.POST.get("response_url"),
+            "trigger_id": request.POST.get("trigger_id"),
+            "params": params,
+        }
+        enqueue(command, **command_kwargs)
 
         return HttpResponse()
 
@@ -83,6 +82,8 @@ class SlackInteractiveView(View):
     def post(self, request, *args, **kwargs):
         submission = json.loads(request.POST["payload"])
 
+        modal_callback_id = submission["view"]["callback_id"]
+
         modal_data = {
             key: submission["view"]["state"]["values"][key][f"{key}_action"]["value"]
             for key in submission["view"]["state"]["values"]
@@ -94,18 +95,13 @@ class SlackInteractiveView(View):
         except json.decoder.JSONDecodeError:
             private_metadata = ""
 
-        modal_callback_id = submission["view"]["callback_id"]
-
         interaction = getattr(interactions, modal_callback_id)
-
-        response = interaction(
-            team_id=submission["team"]["id"],
-            user_id=submission["user"]["id"],
-            modal_data=modal_data,
-            private_metadata=private_metadata,
-        )
-
-        if response is not None:
-            return response
+        interaction_kwargs = {
+            "team_id": submission["team"]["id"],
+            "user_id": submission["user"]["id"],
+            "modal_data": modal_data,
+            "private_metadata": private_metadata,
+        }
+        enqueue(interaction, **interaction_kwargs)
 
         return HttpResponse()
