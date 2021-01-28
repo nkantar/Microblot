@@ -59,6 +59,21 @@ POST_MODAL_TEMPLATE = Template(
                     },
                     "label": {"type": "plain_text", "text": "Category"},
                 },
+                {
+                    "type": "actions",
+                    "elements": [
+                        {
+                            "type": "button",
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Preview",
+                                "emoji": True,
+                            },
+                            "value": "preview_post",
+                            "action_id": "actionId-0",
+                        }
+                    ],
+                },
             ],
         }
     )

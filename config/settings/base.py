@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+from datetime import timedelta
 from os import getenv
 from pathlib import Path
 
@@ -148,3 +149,5 @@ ENVIRONMENT = getenv("ENVIRONMENT")
 
 PREPEND_WWW = False
 APPEND_SLASH = True
+
+PREVIEW_TTL = timedelta(minutes=5)

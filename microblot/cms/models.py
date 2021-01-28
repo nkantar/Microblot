@@ -84,3 +84,52 @@ class Post(TimestampedModel):
             f"{settings.SCHEME}://{self.blog.site.domain}{settings.PORT}"
             f"/posts/{self.short_code}"
         )
+
+
+##################################################
+# there's gotta be a better way of handling this #
+##################################################
+
+
+class PostPreviewManager(Manager):
+    @classmethod
+    def create_post_preview(cls, title, body, author_id, category_slug):
+        html = markdown.markdown(body)
+
+        # TODO ensure short_code is unique
+        # TODO maybe use SlugifiedModel.slug for short_code?
+        short_code = str(uuid.uuid4()).replace("-", "")[: settings.SHORT_CODE_LENGTH]
+
+        author = Author.objects.get(pk=author_id)
+
+        category, unused_created = Category.objects.get_or_create(slug=category_slug)
+
+        post = PostPreview.objects.create(
+            title=title,
+            body_markdown=body,
+            body_html=html,
+            short_code=short_code,
+            blog_id=author.blog_id,
+            author_id=author_id,
+            category_id=category.id,
+        )
+        return post
+
+
+class PostPreview(TimestampedModel):
+    title = CharField(max_length=128)
+    body_markdown = TextField()
+    body_html = TextField()
+    short_code = CharField(max_length=16)
+
+    blog = ForeignKey(Blog, on_delete=CASCADE)
+    author = ForeignKey(Author, on_delete=CASCADE)
+    category = ForeignKey(Category, on_delete=CASCADE)
+
+    objects = PostPreviewManager()
+
+    def get_absolute_url(self):
+        return (
+            f"{settings.SCHEME}://{self.blog.site.domain}{settings.PORT}"
+            f"/previews/{self.short_code}"
+        )

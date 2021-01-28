@@ -1,6 +1,6 @@
 from django.views.generic import DetailView, ListView, RedirectView
 
-from .models import Author, Post
+from .models import Author, Post, PostPreview
 
 
 class BlogHomeView(ListView):
@@ -30,6 +30,19 @@ class BlogFeedView(ListView):
 
 class BlogPostView(DetailView):
     model = Post
+    template_name = "blog_post.html"
+
+    def get_object(self, queryset=None):
+        post = self.model.objects.get(
+            blog__site_id=self.request.site.id,
+            short_code=self.kwargs.get("post_short_code"),
+        )
+        return post
+
+
+class BlogPostPreviewView(DetailView):
+    context_object_name = "post"
+    model = PostPreview
     template_name = "blog_post.html"
 
     def get_object(self, queryset=None):

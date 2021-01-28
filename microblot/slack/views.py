@@ -84,6 +84,7 @@ class SlackInteractiveView(View):
 
         modal_callback_id = submission["view"]["callback_id"]
 
+        interaction_type = submission["type"]
         modal_data = {
             key: submission["view"]["state"]["values"][key][f"{key}_action"]["value"]
             for key in submission["view"]["state"]["values"]
@@ -99,6 +100,7 @@ class SlackInteractiveView(View):
         interaction_kwargs = {
             "team_id": submission["team"]["id"],
             "user_id": submission["user"]["id"],
+            "interaction_type": interaction_type,
             "modal_data": modal_data,
             "private_metadata": private_metadata,
         }
