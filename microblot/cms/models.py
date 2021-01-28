@@ -80,4 +80,7 @@ class Post(TimestampedModel):
     objects = PostManager()
 
     def get_absolute_url(self):
-        return f"{settings.SCHEME}://{self.blog.site.domain}{settings.PORT}/posts/{self.short_code}"
+        return (
+            f"{settings.SCHEME}://{self.blog.site.domain}{settings.PORT}"
+            f"/posts/{self.short_code}"
+        )
