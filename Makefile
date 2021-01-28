@@ -37,8 +37,8 @@ upd: ## docker-compose up --detach
 logs: ## docker-compose logs --follow
 	docker-compose logs --follow
 
-queue: ## docker-compose run --rm web poetry run python manage.py rqstats --interval=1
-	docker-compose run --rm web poetry run python manage.py rqstats --interval=1
+queue: ## docker-compose run --rm worker poetry run python manage.py rqstats --interval=1
+	docker-compose run --rm worker poetry run python manage.py rqstats --interval=1
 
 down: ## docker-compose down
 	docker-compose down
