@@ -3,8 +3,8 @@ from django.urls import path
 from microblot.core.views import dispatch
 
 from .views import (
-    BlogAuthorView,
     BlogAuthorFeedView,
+    BlogAuthorView,
     BlogCategoryView,
     BlogFeedView,
     BlogPostPreviewView,

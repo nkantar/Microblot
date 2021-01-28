@@ -7,9 +7,18 @@ POST_MODAL_TEMPLATE = Template(
         {
             "type": "modal",
             "callback_id": "$modal_type",
-            "title": {"type": "plain_text", "text": "Microblot: New Post"},
-            "submit": {"type": "plain_text", "text": "Submit"},
-            "close": {"type": "plain_text", "text": "Cancel"},
+            "title": {
+                "type": "plain_text",
+                "text": "Microblot: New Post",
+            },
+            "submit": {
+                "type": "plain_text",
+                "text": "Submit",
+            },
+            "close": {
+                "type": "plain_text",
+                "text": "Cancel",
+            },
             "private_metadata": "$private_metadata",
             "blocks": [
                 {
@@ -24,7 +33,10 @@ POST_MODAL_TEMPLATE = Template(
                         },
                         "initial_value": "$post_title",
                     },
-                    "label": {"type": "plain_text", "text": "Title"},
+                    "label": {
+                        "type": "plain_text",
+                        "text": "Title",
+                    },
                 },
                 {
                     "type": "input",
@@ -39,7 +51,10 @@ POST_MODAL_TEMPLATE = Template(
                         },
                         "initial_value": "$post_body",
                     },
-                    "label": {"type": "plain_text", "text": "Body"},
+                    "label": {
+                        "type": "plain_text",
+                        "text": "Body",
+                    },
                     "hint": {
                         "type": "plain_text",
                         "text": "GitHub Flavored Markdown supported",
@@ -57,7 +72,10 @@ POST_MODAL_TEMPLATE = Template(
                         },
                         "initial_value": "$post_category",
                     },
-                    "label": {"type": "plain_text", "text": "Category"},
+                    "label": {
+                        "type": "plain_text",
+                        "text": "Category",
+                    },
                 },
                 {
                     "type": "actions",

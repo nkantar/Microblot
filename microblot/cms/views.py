@@ -10,7 +10,7 @@ class BlogHomeView(ListView):
 
     def get_queryset(self):
         queryset = self.model.objects.filter(
-            blog__site_id=self.request.site.id
+            blog__site_id=self.request.site.id,
         ).order_by("-created_at")
         return queryset
 
@@ -23,7 +23,7 @@ class BlogFeedView(ListView):
 
     def get_queryset(self):
         queryset = self.model.objects.filter(
-            blog__site_id=self.request.site.id
+            blog__site_id=self.request.site.id,
         ).order_by("-created_at")[:10]
         return queryset
 
