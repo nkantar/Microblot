@@ -1,7 +1,7 @@
 {% extends "blog_base.html" %}
 
-{% block title %}{{ post.title }} &laquo; {{ request.site.name }} &laquo; Microblot.io{% endblock %}
-{% block header_title %}<a href="https://www.microblot.io">Microblot.io</a> <span class="separator">&raquo;</span> <a href="/">{{ request.site.name }}</a> <span class="separator">&raquo;</span> <a href="{% url 'dispatch-post' post.short_code %}">{{ post.title }}</a>{% endblock %}
+{% block title %}{% if post.status == post.DRAFT %}[Draft] {% endif %}{{ post.title }} &laquo; {{ request.site.name }} &laquo; Microblot.io{% endblock %}
+{% block header_title %}<a href="https://www.microblot.io">Microblot.io</a> <span class="separator">&raquo;</span> <a href="/">{{ request.site.name }}</a> <span class="separator">&raquo;</span> <a href="{% url 'dispatch-post' post.short_code %}">{% if post.status == post.DRAFT %}[Draft] {% endif %}{{ post.title }}</a>{% endblock %}
 
 {% block blog_content %}
 {% include "blog_section.html" %}

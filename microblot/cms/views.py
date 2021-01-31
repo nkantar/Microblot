@@ -1,6 +1,6 @@
 from django.views.generic import DetailView, ListView, RedirectView
 
-from .models import Author, Post, PostPreview
+from .models import Author, Post
 
 
 class BlogHomeView(ListView):
@@ -11,6 +11,7 @@ class BlogHomeView(ListView):
     def get_queryset(self):
         queryset = self.model.objects.filter(
             blog__site_id=self.request.site.id,
+            status=self.model.PUBLISHED,
         ).order_by("-created_at")
         return queryset
 
@@ -24,6 +25,7 @@ class BlogFeedView(ListView):
     def get_queryset(self):
         queryset = self.model.objects.filter(
             blog__site_id=self.request.site.id,
+            status=self.model.PUBLISHED,
         ).order_by("-created_at")[:10]
         return queryset
 
@@ -36,19 +38,21 @@ class BlogPostView(DetailView):
         post = self.model.objects.get(
             blog__site_id=self.request.site.id,
             short_code=self.kwargs.get("post_short_code"),
+            status=self.model.PUBLISHED,
         )
         return post
 
 
-class BlogPostPreviewView(DetailView):
+class BlogDraftView(DetailView):
     context_object_name = "post"
-    model = PostPreview
+    model = Post
     template_name = "blog_post.html"
 
     def get_object(self, queryset=None):
         post = self.model.objects.get(
             blog__site_id=self.request.site.id,
             short_code=self.kwargs.get("post_short_code"),
+            status=self.model.DRAFT,
         )
         return post
 
@@ -67,6 +71,7 @@ class BlogCategoryView(ListView):
         queryset = self.model.objects.filter(
             blog__site_id=self.request.site.id,
             category__slug=self.kwargs["category_slug"],
+            status=self.model.PUBLISHED,
         ).order_by("-created_at")
         return queryset
 
@@ -88,6 +93,7 @@ class BlogAuthorView(ListView):
         queryset = self.model.objects.filter(
             blog__site_id=self.request.site.id,
             author__slug=self.kwargs["author_slug"],
+            status=self.model.PUBLISHED,
         ).order_by("-created_at")
         return queryset
 
@@ -109,6 +115,7 @@ class BlogAuthorFeedView(ListView):
         queryset = self.model.objects.filter(
             blog__site_id=self.request.site.id,
             author__slug=self.kwargs["author_slug"],
+            status=self.model.PUBLISHED,
         ).order_by("-created_at")[:10]
         return queryset
 

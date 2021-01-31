@@ -7,7 +7,7 @@ from .views import (
     BlogAuthorView,
     BlogCategoryView,
     BlogFeedView,
-    BlogPostPreviewView,
+    BlogDraftView,
     BlogPostView,
     PostsRedirectView,
 )
@@ -26,12 +26,12 @@ urlpatterns = [
         name="dispatch-post",
     ),
     path(
-        "previews/<post_short_code>/",
+        "drafts/<post_short_code>/",
         dispatch,
         {
-            "cms_class": BlogPostPreviewView,
+            "cms_class": BlogDraftView,
         },
-        name="dispatch-preview",
+        name="dispatch-draft",
     ),
     path(
         "posts/",
