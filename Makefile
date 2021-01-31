@@ -17,7 +17,8 @@ typecheck: ## [container] check type hints with mypy
 	poetry run mypy --strict microblot/**
 
 test: ## [container] run tests with pytest
-	poetry run pytest --cov=microblot tests/
+	# poetry run pytest --cov=microblot tests/
+	poetry run python -m pytest -vv
 
 devserve: ## [container] run dev server
 	poetry run python manage.py runserver 0.0.0.0:8000
